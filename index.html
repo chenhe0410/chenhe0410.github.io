@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <script
+            src="http://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet"
+          href="/bootstrap.min.css">
+    <script src="/bootstrap.min.js"></script>
+    <script src="/cropper.min.js"></script>
+    <link rel="stylesheet"
+          href="/cropper.min.css">
+    <title>北京航空航天大学66周年校庆头像制作</title>
+    <style>
+        body {
+
+        }
+
+        .container-fluid {
+            max-width: 750px;
+        }
+
+        .avatar-preview-border {
+            border: #CC3300 2px solid;
+            overflow: hidden;
+            zoom: 0.5;
+            width: fit-content;
+            height: fit-content;
+            padding: 0;
+            margin: 0;
+        }
+
+        .avatar-release-border {
+            border: #CC3300 2px solid;
+            overflow: hidden;
+            zoom: 0.3;
+            width: fit-content;
+            height: fit-content;
+            padding: 0;
+        }
+
+        .avatar-preview {
+        }
+
+        .cbtn {
+            background: #ffffff;
+            padding: 0;
+            margin: 0;
+            border-radius: 10px;
+        }
+
+        .row {
+            margin-top: 15px;
+            margin-bottom: 15px;
+            padding: 0;
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        .header {
+            -moz-box-shadow: 0 0 20px #333333;
+            -webkit-box-shadow: 0 0 20px #333333;
+            box-shadow: 0 0 20px #333333;
+            width: 100%;
+        }
+
+        .footer {
+            -moz-box-shadow: 0 0 20px #333333;
+            -webkit-box-shadow: 0 0 20px #333333;
+            box-shadow: 0 0 20px #333333;
+            width: 100%;
+            height: 20px;
+            background: linear-gradient(300deg, #990000, #CC3300);
+        }
+
+        .container-fluid {
+            padding: 0;
+            background-image: url("/cloud.png"), linear-gradient(330deg, #FFE9F1, #E7F5FF);
+            background-repeat: repeat, repeat;
+        }
+
+        .block {
+            margin: 0;
+            padding: 0;
+        }
+
+        p {
+            color: #ffffff;
+        }
+
+        .edit-border {
+            width: fit-content;
+            height: fit-content;
+            padding: 5px;
+            border: #CC3300;
+            border-style: solid;
+            border-radius: 10px;
+        }
+
+        .edit-box {
+            width: 300px;
+            height: 300px;
+        }
+
+        .c {
+            float: none;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row block">
+        <div class="col-xs-12 center-block block">
+            <img class="header"
+                 src="/header.jpg">
+        </div>
+    </div>
+    <div class="row" >
+    </div>
+
+
+    <div class="row edit" id="edit-row">
+        <div class="col-xs-6">
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <label for="file" class="btn btn-danger center-block"
+                           style="width: 100px;margin-top: 15px">选择图片</label>
+                    <input type="file" id="file" accept="image/*" onchange="onFileChange()" style="display: none">
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <button class="btn btn-danger center-block" onclick="release()" style="width: 100px">生成头像</button>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-xs-6">
+            <div class="avatar-preview-border">
+                <div class="avatar-preview"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row edit-avatar">
+        <div class="col-xs-12">
+            <div class="edit-border c">
+                <div class="edit-box">
+                    <canvas id="avatar" style="display: block"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row c edit-avatar" style="width: 60%;">
+        <div class="col-xs-6">
+            <button class="btn btn-danger center-block" onclick="rotate(-90)" style="width: 100px">向左旋转</button>
+        </div>
+        <div class="col-xs-6">
+            <button class="btn btn-danger center-block" onclick="rotate(90)" style="width: 100px">向右旋转</button>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 30px;margin-bottom: 30px">
+        <div class="col-xs-12">
+            <img class="img-responsive center-block" style="width: 60%"
+                 src="/info.png">
+        </div>
+    </div>
+    <div class="row block">
+        <div class="col-xs-12 center-block block text-center">
+            <div class="footer">
+
+            </div>
+            <!--img class="footer" src="/footer.jpg"-->
+        </div>
+    </div>
+
+    <div class="modal fade" id="release-modal" role="dialog" aria-labelledby="release-modal-label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="release-modal-label">北京航空航天大学66周年校庆</h4></div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="avatar-release-border c">
+                                <div id="release"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <h4 class="text-center">长按保存图片</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">返回</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+    var img = new Image();
+    var $avatar = $('#avatar');
+    var flag = true;
+    var maxLength = 800;
+
+
+    $(document).ready(
+        function () {
+            img = new Image();
+            $avatar.cropper({
+                aspectRatio: 1 / 1,
+                viewMode: 0,
+                movable: true,
+                scalable: true,
+                rotatable: true,
+                toggleDragModeOnDblclick: false,
+                minCropBoxHeight: 50,
+                minCropBoxWidth: 50,
+                zoomOnTouch: true,
+                crop: function (event) {
+                    updatePreview();
+                },
+                ready: function () {
+                    if (flag) {
+                        $('.edit').hide();
+                        $('.edit-avatar').hide();
+                        flag = false;
+						chooseBorder('/14.png');
+                    }
+                }
+            });
+
+        }
+    );
+
+    function updatePreview() {
+        var $avatar = $('#avatar');
+        var cropper = $avatar.data('cropper');
+        var cas = cropper.getCroppedCanvas({
+            width: 300,
+            height: 300,
+            fillColor: "#ffffff"
+        });
+        var ctx = cas.getContext('2d');
+        ctx.drawImage(img, 0, 0, 300, 300);
+        $('.avatar-preview').html(cas);
+    }
+
+    function chooseBorder(url) {
+        img = new Image();
+        img.src = url;
+        img.onload = function () {
+            $('.edit').show();
+            updatePreview();
+            $(window).scrollTop($('#edit-row').offset().top);
+        };
+    }
+
+    function rotate(angle) {
+        $avatar.cropper("rotate", angle);
+        console.log(angle);
+    }
+
+    function onFileChange() {
+        $('.edit-avatar').show();
+        var file0 = $("#file")[0].files[0];
+        var url0 = URL.createObjectURL(file0);
+        var $avatar = $('#avatar');
+        var $avatar_preview = $(".avatar-preview");
+        var cropper = $avatar.data('cropper');
+
+
+        var m = new Image();
+
+        m.src = url0;
+        m.onload = function () {
+            if (m.width > maxLength) {
+                m.height = m.height / m.width * maxLength;
+                m.width = maxLength;
+            }
+            if (m.height > maxLength) {
+                m.width = m.width / m.height * maxLength;
+                m.height = maxLength;
+            }
+            var cc = document.createElement("canvas");
+            cc.width = m.width;
+            cc.height = m.height;
+            var cx = cc.getContext('2d');
+            cx.drawImage(m, 0, 0, m.width, m.height);
+            var url;
+            url = cc.toDataURL("image/png");
+            cropper.replace(url);
+        };
+    }
+
+    function release() {
+        var $avatar = $('#avatar');
+        var cropper = $avatar.data('cropper');
+        var $release = $('#release');
+        var cas = cropper.getCroppedCanvas({
+            width: maxLength,
+            height: maxLength,
+            fillColor: "#ffffff"
+        });
+        var ctx = cas.getContext('2d');
+        ctx.drawImage(img, 0, 0, maxLength, maxLength);
+        var avaimg = new Image();
+        avaimg.src = cas.toDataURL("image/jpeg");
+        $release.html(avaimg);
+        $('#release-modal').modal();
+    }
+
+</script>
+
+</body>
+</html>
