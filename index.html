@@ -75,7 +75,7 @@
 
         .container-fluid {
             padding: 0;
-            background-image: url("cloud.png"), linear-gradient(330deg, #FFE9F1, #E7F5FF);
+            background-image: url("fish.jpg"), linear-gradient(330deg, #FFE9F1, #E7F5FF);
             background-repeat: repeat, repeat;
         }
 			
@@ -108,16 +108,19 @@
             margin-left: auto;
             margin-right: auto;
         }
-
+		.bk{
+			background:rgba(255,255,255,0.3);
+		}
     </style>
 </head>
 <body>
 
 <div class="container-fluid">
+<div class="bk">
     <div class="row block">
         <div class="col-xs-12 center-block block">
             <img class="header"
-                 src="header.jpg">
+                 src="bh1.png">
         </div>
     </div>
     <div class="row edit" id="edit-row" style="margin: 5% 0%">
@@ -137,7 +140,7 @@
 			</div>
 
 			<div class="col-xs-4">
-					<button class="btn btn-danger center-block" style="width: 100px;" onclick="release()" >生成头像</button>
+					<button class="btn btn-danger center-block" style="width: 100px;" onclick="release()" >生成图片</button>
 			</div>
 		</div>
 	</div>
@@ -163,7 +166,7 @@
     <div class="row" style="margin-top: 30px;margin-bottom: 30px">
         <div class="col-xs-12">
             <img class="img-responsive center-block" style="width: 60%"
-                 src="info.png">
+                 src="down.png">
         </div>
     </div>
     <div class="row block">
@@ -201,7 +204,7 @@
             </div>
         </div>
     </div>
-
+</div>
 </div>
 
 <script>
@@ -216,7 +219,7 @@
         function () {
             img = new Image();
             $avatar.cropper({
-                aspectRatio: 1 / 1,
+                aspectRatio: 1/1,
                 viewMode: 0,
                 movable: true,
                 scalable: true,
@@ -233,7 +236,7 @@
                         $('.edit').hide();
                         $('.edit-avatar').hide();
                         flag = false;
-						chooseBorder('bk.png');
+						chooseBorder('rbk.png');
                     }
                 }
             });
@@ -242,6 +245,7 @@
     );
 
     function updatePreview() {
+		
         var $avatar = $('#avatar');
         var cropper = $avatar.data('cropper');
         var cas = cropper.getCroppedCanvas({
@@ -273,11 +277,8 @@
         $('.edit-avatar').show();
         var file0 = $("#file")[0].files[0];
         var url0 = URL.createObjectURL(file0);
-        var $avatar = $('#avatar');
-        var $avatar_preview = $(".avatar-preview");
+        var $avatar = $('#avatar'); 
         var cropper = $avatar.data('cropper');
-
-
         var m = new Image();
 
         m.src = url0;
